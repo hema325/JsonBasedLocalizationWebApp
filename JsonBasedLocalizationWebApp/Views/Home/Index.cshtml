@@ -1,0 +1,64 @@
+﻿@using Microsoft.AspNetCore.Localization;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@using Microsoft.Extensions.Options;
+@inject IViewLocalizer _viewLocalizer
+@inject IOptions<RequestLocalizationOptions> _localizationOptions;
+@model User
+@{
+    ViewData["Title"] = "Home Page";
+    var languages = _localizationOptions?.Value?.SupportedCultures?.Select(c => new SelectListItem { Value = c.Name, Text = c.NativeName });
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+}
+
+<div class="text-center">
+    <h1 class="display-4">@_viewLocalizer["Welcome","Ibrahim"]</h1>
+</div>
+
+<form asp-action="ChangeLanguage" class="mt-5">
+    <label class="form-label">@_viewLocalizer["language"]</label>
+    <select asp-items="@languages" name="culture"  class="form-select"></select>
+    <input type="submit" value="@_viewLocalizer["change"]" class="btn btn-primary mt-2" />
+</form>
+
+<table class="table mt-5">
+    <tbody>
+        <tr>
+            <td>@_viewLocalizer["language"]</td>
+            <td>@requestCulture.RequestCulture.Culture.DisplayName</td>
+        </tr>
+        <tr>
+            <td>@_viewLocalizer["UIlanguage"]</td>
+            <td>@requestCulture.RequestCulture.UICulture.DisplayName</td>
+        </tr>
+        <tr>
+            <td>@_viewLocalizer["date"]</td>
+            <td>@DateTime.Now.ToLongDateString()</td>
+        </tr>
+        <tr>
+            <td>@_viewLocalizer["currency"]</td>
+            <td>@(25.ToString("c"))</td>
+        </tr>
+        <tr>
+            <td>@_viewLocalizer["numbers"]</td>
+            <td>@(234.55.ToString())</td>
+        </tr>
+    </tbody>
+</table>
+
+<form class="mt-5">
+    <div>
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Address" class="form-label"></label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <input type="submit" value="@_viewLocalizer["add"]" class="btn btn-primary mt-2"/>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

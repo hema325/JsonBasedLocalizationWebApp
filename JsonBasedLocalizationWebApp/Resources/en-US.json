@@ -1,0 +1,15 @@
+{
+  "welcome": "Welcome {0}, How are you?",
+  "language": "Language",
+  "change": "Change",
+  "home": "Home",
+  "privacy": "Privacy",
+  "name": "Name",
+  "Address": "Address",
+  "required": "Field {0} is required",
+  "add": "Add",
+  "UIlanguage": "UI Language",
+  "date": "Date",
+  "currency": "Currency",
+  "numbers": "Numbers"
+}
